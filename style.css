@@ -29,6 +29,11 @@
 
 html {
   font-size: 16px;
+  overscroll-behavior: none;
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 
 body {
@@ -39,6 +44,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  overscroll-behavior: none;
+  overflow: hidden;
 }
 
 #app {
