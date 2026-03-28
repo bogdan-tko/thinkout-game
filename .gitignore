@@ -1,0 +1,4 @@
+.vite/
+.claude/
+node_modules/
+react-app/
