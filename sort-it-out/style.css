@@ -1,5 +1,6 @@
 body {
   align-items: flex-start;
+  overflow-x: hidden;
 }
 
 /* ── Solved groups ───────────────────── */
@@ -37,7 +38,7 @@ body {
 #grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  gap: 6px;
   margin-bottom: 16px;
 }
 .word-tile {
@@ -45,15 +46,22 @@ body {
   color: #fff;
   border: none;
   border-radius: 10px;
-  padding: 16px 8px;
+  aspect-ratio: 1;
+  padding: 4px;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   text-align: center;
   cursor: pointer;
   transition: transform 150ms ease, background 150ms ease;
   user-select: none;
   line-height: 1.2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  word-break: break-word;
+  min-width: 0;
 }
 .word-tile:hover {
   background: #3f3f46;

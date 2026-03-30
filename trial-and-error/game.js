@@ -2,54 +2,388 @@
 const ANSWER = "BUILD";
 
 const VALID_WORDS = [
-  "BUILD","FUNDS","PLANS","TRACK","GROWS","BRICK","THINK","SPEND",
-  "COSTS","GOALS","TOWER","SCALE","STACK","FLOWS","SHARE","STOCK",
-  "VALUE","ASSET","DEBIT","DRAFT","LOANS","YIELD","TAXES","TOOLS",
-  "CHART","TREND","AUDIT","POLIS","MONEY","GRANT","BANKS","BOOKS",
-  "BRACE","CRANE","FORGE","FRAME","GROUT","LEVEL","LOADS","MANOR",
-  "MORTA","PLANT","RAISE","REBAR","RIVET","ROUGH","SCOUT","SLATE",
-  "TRADE","TRUST","UNITS","VAULT","WAGES","WORTH","BONDS","CLERK",
-  "CUBIC","DEALS","DRILL","DWELL","ENTRY","EQUAL","FIXED","FLOOR",
-  "FOUND","GROSS","HOUSE","INDEX","INPUT","JOINT","LABOR","LEASE",
-  "LINER","MAKER","MATCH","NICHE","OFFER","ORDER","OWNER","PARSE",
-  "PITCH","POINT","PRIME","PROOF","QUOTA","RATIO","ROUTE","SALES",
-  "SETUP","SIGHT","SOLID","STAMP","STEAM","STONE","STORE","SURGE",
-  "TABLE","TALLY","TERMS","TITLE","TOTAL","TRUSS","URBAN","USAGE",
-  "WEIGH","YIELD","ABOUT","ABOVE","ADAPT","AGILE","ALIGN","ALLOW",
-  "APPLY","ARENA","AVAIL","AWARE","BASIC","BEACH","BEGIN","BELOW",
-  "BENCH","BLEND","BLOCK","BLOOM","BOARD","BOOST","BOUND","BRAND",
-  "BREAK","BRIEF","BRING","BROAD","BUDGE","BUNCH","BUYER","CAUSE",
-  "CHAIN","CHAIR","CHECK","CHIEF","CLAIM","CLASS","CLEAN","CLEAR",
-  "CLIMB","CLOSE","COACH","COVER","CRAFT","CRASH","DAILY","DEPTH",
-  "DIGIT","DOING","DOUBT","DRAWN","DRIVE","EARLY","EARTH","EIGHT",
-  "EMAIL","EVENT","EVERY","EXACT","EXTRA","FAITH","FAULT","FIELD",
-  "FIFTY","FIGHT","FINAL","FIRST","FLESH","FLOAT","FOCUS","FORCE",
-  "FRONT","FRUIT","FULLY","GIVEN","GOING","GRACE","GRADE","GRAND",
-  "GRASP","GREEN","GROUP","GUARD","GUESS","GUIDE","HANDS","HAPPY",
-  "HEART","HEAVY","HUMAN","IDEAL","IMAGE","IMPLY","INNER","ISSUE",
-  "JUDGE","KNOWN","LARGE","LATER","LAUGH","LAYER","LEARN","LEGAL",
-  "LIGHT","LIMIT","LINES","LINKS","LIVES","LOCAL","LOGIC","LOOSE",
-  "LOWER","LUCKY","LUNCH","MAGIC","MAJOR","MARCH","MEDIA","MERGE",
-  "MIGHT","MINOR","MODEL","MONTH","MORAL","MOUNT","NERVE","NEVER",
-  "NIGHT","NOISE","NORTH","NOTED","NOVEL","OCCUR","PANEL","PARTY",
-  "PAUSE","PEACE","PENNY","PHASE","PHONE","PIECE","PLACE","PLAIN",
-  "PLATE","PLAZA","POWER","PRESS","PRICE","PRIDE","PRIOR","PRIZE",
-  "PROVE","QUICK","QUIET","QUITE","RANGE","RAPID","REACH","READY",
-  "REALM","REFER","REIGN","RELAX","REPLY","RIGHT","RIVAL","RIVER",
-  "ROUND","ROYAL","RURAL","SAINT","SAVED","SCENE","SCORE","SENSE",
-  "SERVE","SEVEN","SHALL","SHAPE","SHIFT","SHINE","SHORT","SHOWN",
-  "SIDED","SINCE","SIXTH","SIXTY","SKILL","SLEEP","SLICE","SLIDE",
-  "SMALL","SMART","SMILE","SOLVE","SOUTH","SPACE","SPARE","SPEAK",
-  "SPEED","SPLIT","SPORT","STAGE","STAKE","STAND","START","STATE",
-  "STEER","STICK","STILL","STRIP","STUDY","STUFF","STYLE","SUITE",
-  "SUPER","SWEET","SWING","TAKEN","TASTE","TEACH","THEME","THICK",
-  "THIRD","THOSE","THREE","THREW","THROW","TIGHT","TIMES","TODAY",
-  "TOKEN","TOPIC","TOUCH","TOUGH","TRACE","TRAIL","TRAIN","TREAT",
-  "TRIAL","TRICK","TRIED","TRUCK","TRULY","TWICE","TWIST","ULTRA",
-  "UNDER","UNION","UNITE","UNTIL","UPPER","UPSET","USING","USUAL",
-  "VALID","VIDEO","VIGOR","VIRAL","VISIT","VITAL","VOCAL","VOICE",
-  "WASTE","WATCH","WATER","WHEEL","WHERE","WHILE","WHITE","WHOLE",
-  "WHOSE","WIDER","WOMEN","WORLD","WRITE","YOUNG"
+  "BUILD",
+  "FUNDS",
+  "PLANS",
+  "TRACK",
+  "GROWS",
+  "BRICK",
+  "THINK",
+  "SPEND",
+  "COSTS",
+  "GOALS",
+  "TOWER",
+  "SCALE",
+  "STACK",
+  "FLOWS",
+  "SHARE",
+  "STOCK",
+  "VALUE",
+  "ASSET",
+  "DEBIT",
+  "DRAFT",
+  "LOANS",
+  "YIELD",
+  "TAXES",
+  "TOOLS",
+  "CHART",
+  "TREND",
+  "AUDIT",
+  "POLIS",
+  "MONEY",
+  "GRANT",
+  "BANKS",
+  "BOOKS",
+  "BRACE",
+  "CRANE",
+  "FORGE",
+  "FRAME",
+  "GROUT",
+  "LEVEL",
+  "LOADS",
+  "MANOR",
+  "MORTA",
+  "PLANT",
+  "RAISE",
+  "REBAR",
+  "RIVET",
+  "ROUGH",
+  "SCOUT",
+  "SLATE",
+  "TRADE",
+  "TRUST",
+  "UNITS",
+  "VAULT",
+  "WAGES",
+  "WORTH",
+  "BONDS",
+  "CLERK",
+  "CUBIC",
+  "DEALS",
+  "DRILL",
+  "DWELL",
+  "ENTRY",
+  "EQUAL",
+  "FIXED",
+  "FLOOR",
+  "FOUND",
+  "GROSS",
+  "HOUSE",
+  "INDEX",
+  "INPUT",
+  "JOINT",
+  "LABOR",
+  "LEASE",
+  "LINER",
+  "MAKER",
+  "MATCH",
+  "NICHE",
+  "OFFER",
+  "ORDER",
+  "OWNER",
+  "PARSE",
+  "PITCH",
+  "POINT",
+  "PRIME",
+  "PROOF",
+  "QUOTA",
+  "RATIO",
+  "ROUTE",
+  "SALES",
+  "SETUP",
+  "SIGHT",
+  "SOLID",
+  "STAMP",
+  "STEAM",
+  "STONE",
+  "STORE",
+  "SURGE",
+  "TABLE",
+  "TALLY",
+  "TERMS",
+  "TITLE",
+  "TOTAL",
+  "TRUSS",
+  "URBAN",
+  "USAGE",
+  "WEIGH",
+  "YIELD",
+  "ABOUT",
+  "ABOVE",
+  "ADAPT",
+  "AGILE",
+  "ALIGN",
+  "ALLOW",
+  "APPLY",
+  "ARENA",
+  "AVAIL",
+  "AWARE",
+  "BASIC",
+  "BEACH",
+  "BEGIN",
+  "BELOW",
+  "BENCH",
+  "BLEND",
+  "BLOCK",
+  "BLOOM",
+  "BOARD",
+  "BOOST",
+  "BOUND",
+  "BRAND",
+  "BREAK",
+  "BRIEF",
+  "BRING",
+  "BROAD",
+  "BUDGE",
+  "BUNCH",
+  "BUYER",
+  "CAUSE",
+  "CHAIN",
+  "CHAIR",
+  "CHECK",
+  "CHIEF",
+  "CLAIM",
+  "CLASS",
+  "CLEAN",
+  "CLEAR",
+  "CLIMB",
+  "CLOSE",
+  "COACH",
+  "COVER",
+  "CRAFT",
+  "CRASH",
+  "DAILY",
+  "DEPTH",
+  "DIGIT",
+  "DOING",
+  "DOUBT",
+  "DRAWN",
+  "DRIVE",
+  "EARLY",
+  "EARTH",
+  "EIGHT",
+  "EMAIL",
+  "EVENT",
+  "EVERY",
+  "EXACT",
+  "EXTRA",
+  "FAITH",
+  "FAULT",
+  "FIELD",
+  "FIFTY",
+  "FIGHT",
+  "FINAL",
+  "FIRST",
+  "FLESH",
+  "FLOAT",
+  "FOCUS",
+  "FORCE",
+  "FRONT",
+  "FRUIT",
+  "FULLY",
+  "GIVEN",
+  "GOING",
+  "GRACE",
+  "GRADE",
+  "GRAND",
+  "GRASP",
+  "GREEN",
+  "GROUP",
+  "GUARD",
+  "GUESS",
+  "GUIDE",
+  "HANDS",
+  "HAPPY",
+  "HEART",
+  "HEAVY",
+  "HUMAN",
+  "IDEAL",
+  "IMAGE",
+  "IMPLY",
+  "INNER",
+  "ISSUE",
+  "JUDGE",
+  "KNOWN",
+  "LARGE",
+  "LATER",
+  "LAUGH",
+  "LAYER",
+  "LEARN",
+  "LEGAL",
+  "LIGHT",
+  "LIMIT",
+  "LINES",
+  "LINKS",
+  "LIVES",
+  "LOCAL",
+  "LOGIC",
+  "LOOSE",
+  "LOWER",
+  "LUCKY",
+  "LUNCH",
+  "MAGIC",
+  "MAJOR",
+  "MARCH",
+  "MEDIA",
+  "MERGE",
+  "MIGHT",
+  "MINOR",
+  "MODEL",
+  "MONTH",
+  "MORAL",
+  "MOUNT",
+  "NERVE",
+  "NEVER",
+  "NIGHT",
+  "NOISE",
+  "NORTH",
+  "NOTED",
+  "NOVEL",
+  "OCCUR",
+  "PANEL",
+  "PARTY",
+  "PAUSE",
+  "PEACE",
+  "PENNY",
+  "PHASE",
+  "PHONE",
+  "PIECE",
+  "PLACE",
+  "PLAIN",
+  "PLATE",
+  "PLAZA",
+  "POWER",
+  "PRESS",
+  "PRICE",
+  "PRIDE",
+  "PRIOR",
+  "PRIZE",
+  "PROVE",
+  "QUICK",
+  "QUIET",
+  "QUITE",
+  "RANGE",
+  "RAPID",
+  "REACH",
+  "READY",
+  "REALM",
+  "REFER",
+  "REIGN",
+  "RELAX",
+  "REPLY",
+  "RIGHT",
+  "RIVAL",
+  "RIVER",
+  "ROUND",
+  "ROYAL",
+  "RURAL",
+  "SAINT",
+  "SAVED",
+  "SCENE",
+  "SCORE",
+  "SENSE",
+  "SERVE",
+  "SEVEN",
+  "SHALL",
+  "SHAPE",
+  "SHIFT",
+  "SHINE",
+  "SHORT",
+  "SHOWN",
+  "SIDED",
+  "SINCE",
+  "SIXTH",
+  "SIXTY",
+  "SKILL",
+  "SLEEP",
+  "SLICE",
+  "SLIDE",
+  "SMALL",
+  "SMART",
+  "SMILE",
+  "SOLVE",
+  "SOUTH",
+  "SPACE",
+  "SPARE",
+  "SPEAK",
+  "SPEED",
+  "SPLIT",
+  "SPORT",
+  "STAGE",
+  "STAKE",
+  "STAND",
+  "START",
+  "STATE",
+  "STEER",
+  "STICK",
+  "STILL",
+  "STRIP",
+  "STUDY",
+  "STUFF",
+  "STYLE",
+  "SUITE",
+  "SUPER",
+  "SWEET",
+  "SWING",
+  "TAKEN",
+  "TASTE",
+  "TEACH",
+  "THEME",
+  "THICK",
+  "THIRD",
+  "THOSE",
+  "THREE",
+  "THREW",
+  "THROW",
+  "TIGHT",
+  "TIMES",
+  "TODAY",
+  "TOKEN",
+  "TOPIC",
+  "TOUCH",
+  "TOUGH",
+  "TRACE",
+  "TRAIL",
+  "TRAIN",
+  "TREAT",
+  "TRIAL",
+  "TRICK",
+  "TRIED",
+  "TRUCK",
+  "TRULY",
+  "TWICE",
+  "TWIST",
+  "ULTRA",
+  "UNDER",
+  "UNION",
+  "UNITE",
+  "UNTIL",
+  "UPPER",
+  "UPSET",
+  "USING",
+  "USUAL",
+  "VALID",
+  "VIDEO",
+  "VIGOR",
+  "VIRAL",
+  "VISIT",
+  "VITAL",
+  "VOCAL",
+  "VOICE",
+  "WASTE",
+  "WATCH",
+  "WATER",
+  "WHEEL",
+  "WHERE",
+  "WHILE",
+  "WHITE",
+  "WHOLE",
+  "WHOSE",
+  "WIDER",
+  "WOMEN",
+  "WORLD",
+  "WRITE",
+  "YOUNG",
 ];
 
 const WORD_SET = new Set(VALID_WORDS);
@@ -62,10 +396,10 @@ const FLIP_STAGGER = 200; // ms between each tile flip
 let currentRow = 0;
 let currentCol = 0;
 let currentGuess = [];
-let guesses = [];       // array of { word, result[] }
+let guesses = []; // array of { word, result[] }
 let gameOver = false;
 let isAnimating = false;
-let keyStates = {};     // letter → "correct" | "present" | "absent"
+let keyStates = {}; // letter → "correct" | "present" | "absent"
 
 /* ── DOM refs ────────────────────────── */
 const boardEl = document.getElementById("board");
@@ -79,7 +413,9 @@ const shareBtn = document.getElementById("shareBtn");
 
 /* ── Helpers ─────────────────────────── */
 function getTile(row, col) {
-  return boardEl.querySelector(`.row[data-row="${row}"] .tile[data-col="${col}"]`);
+  return boardEl.querySelector(
+    `.row[data-row="${row}"] .tile[data-col="${col}"]`,
+  );
 }
 
 function getKey(letter) {
@@ -124,7 +460,9 @@ function showToast(message, duration = 1500) {
   if (duration > 0) {
     setTimeout(() => {
       toast.classList.add("fade-out");
-      toast.addEventListener("animationend", () => toast.remove(), { once: true });
+      toast.addEventListener("animationend", () => toast.remove(), {
+        once: true,
+      });
     }, duration);
   }
 
@@ -254,7 +592,11 @@ function shakeRow(row) {
   const tiles = rowEl.querySelectorAll(".tile");
   tiles.forEach((tile) => {
     tile.classList.add("shake");
-    tile.addEventListener("animationend", () => tile.classList.remove("shake"), { once: true });
+    tile.addEventListener(
+      "animationend",
+      () => tile.classList.remove("shake"),
+      { once: true },
+    );
   });
 }
 
@@ -268,10 +610,14 @@ function bounceRow(row, onComplete) {
   tiles.forEach((tile, i) => {
     setTimeout(() => {
       tile.classList.add("bounce");
-      tile.addEventListener("animationend", () => {
-        tile.classList.remove("bounce");
-        if (i === WORD_LENGTH - 1 && onComplete) onComplete();
-      }, { once: true });
+      tile.addEventListener(
+        "animationend",
+        () => {
+          tile.classList.remove("bounce");
+          if (i === WORD_LENGTH - 1 && onComplete) onComplete();
+        },
+        { once: true },
+      );
     }, i * 100);
   });
 }
@@ -303,14 +649,7 @@ function updateKeyboard(word, result) {
 /* ── Show result overlay ────────────── */
 function showResult(won) {
   const messages = won
-    ? [
-        "Genius",
-        "Magnificent",
-        "Impressive",
-        "Splendid",
-        "Great",
-        "Phew!",
-      ]
+    ? ["Genius", "Magnificent", "Impressive", "Splendid", "Great", "Phew!"]
     : null;
 
   if (won) {
@@ -319,8 +658,7 @@ function showResult(won) {
       "Every great business starts with one word. You found it.";
   } else {
     resultTitle.textContent = "So close!";
-    resultMsg.innerHTML =
-      `The word was <strong>${ANSWER}</strong>. Even the best builders miss sometimes.`;
+    resultMsg.innerHTML = `The word was <strong>${ANSWER}</strong>. Even the best builders miss sometimes.`;
   }
 
   // Build mini board
@@ -346,7 +684,7 @@ function shareResults() {
     .map(({ result }) => result.map((r) => emojiMap[r]).join(""))
     .join("\n");
 
-  const text = `ThinkOut Wordle ${guesses.length}/${MAX_ROWS}\n\n${rows}\n\nplay.thinkout.io/wordle`;
+  const text = `ThinkOut · Trial & Error ${guesses.length}/${MAX_ROWS}\n\n${rows}\n\nplay.thinkout.io/trial-and-error`;
 
   if (navigator.share) {
     navigator.share({ text }).catch(() => {
@@ -369,7 +707,7 @@ const STATE_KEY = "thinkout_wordle_state";
 
 function saveState() {
   const state = {
-    guesses: guesses.map(g => ({ word: g.word, result: g.result })),
+    guesses: guesses.map((g) => ({ word: g.word, result: g.result })),
     gameOver,
     keyStates,
   };
@@ -415,7 +753,9 @@ function restoreState() {
 
     // If game was over, show the result overlay
     if (gameOver) {
-      const won = guesses[guesses.length - 1].result.every(r => r === "correct");
+      const won = guesses[guesses.length - 1].result.every(
+        (r) => r === "correct",
+      );
       setTimeout(() => showResult(won), 300);
     }
 
@@ -503,9 +843,15 @@ function showOnboarding() {
 
 function goToSlide(n) {
   currentSlide = n;
-  document.querySelectorAll(".onboarding-slide").forEach((s) => s.classList.remove("active"));
-  document.querySelectorAll(".dot").forEach((d) => d.classList.remove("active"));
-  document.querySelector(`.onboarding-slide[data-slide="${n}"]`).classList.add("active");
+  document
+    .querySelectorAll(".onboarding-slide")
+    .forEach((s) => s.classList.remove("active"));
+  document
+    .querySelectorAll(".dot")
+    .forEach((d) => d.classList.remove("active"));
+  document
+    .querySelector(`.onboarding-slide[data-slide="${n}"]`)
+    .classList.add("active");
   document.querySelector(`.dot[data-dot="${n}"]`).classList.add("active");
   const btn = document.getElementById("onboardingNext");
   btn.textContent = n === TOTAL_SLIDES - 1 ? "Got it!" : "Next";
@@ -518,7 +864,9 @@ document.getElementById("onboardingNext").onclick = () => {
     const onboarding = document.getElementById("onboarding");
     onboarding.classList.add("hidden");
     localStorage.setItem(ONBOARDING_KEY, "1");
-    setTimeout(() => { onboarding.style.display = "none"; }, 300);
+    setTimeout(() => {
+      onboarding.style.display = "none";
+    }, 300);
   }
 };
 
