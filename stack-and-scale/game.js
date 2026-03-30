@@ -535,9 +535,9 @@ function init() {
   updateProgressBar();
 
   document.addEventListener("keydown", onKeyDown);
-  board.addEventListener("touchstart", onTouchStart, { passive: true });
-  board.addEventListener("touchmove", onTouchMove, { passive: false });
-  board.addEventListener("touchend", onTouchEnd, { passive: true });
+  document.addEventListener("touchstart", onTouchStart, { passive: true });
+  document.addEventListener("touchmove", onTouchMove, { passive: false });
+  document.addEventListener("touchend", onTouchEnd, { passive: true });
 }
 
 function newGame() {

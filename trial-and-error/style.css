@@ -142,10 +142,13 @@ body {
   transform: scale(0.95);
 }
 .key-wide {
-  flex: 1.5;
-  max-width: 66px;
-  font-size: 12px;
+  flex: 1.8;
+  max-width: 72px;
+  font-size: 11px;
   letter-spacing: 0.02em;
+}
+.key svg {
+  display: block;
 }
 
 /* ── Keyboard color states ───────────── */
