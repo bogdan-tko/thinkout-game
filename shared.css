@@ -69,7 +69,7 @@ a {
 .header-left {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0;
 }
 .logo-row {
   display: flex;
@@ -82,7 +82,7 @@ a {
 .tagline {
   font-size: 14px;
   color: #71717a;
-  margin-top: 2px;
+  margin-top: 0;
 }
 
 /* ── Shared buttons ──────────────────── */
