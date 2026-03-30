@@ -49,7 +49,6 @@ const TAX_DURATION = 5;    // tax tile lasts N moves
 let grid; // 4x4 array of values (0 = empty)  (-1 = tax)
 let score;
 let won;
-let keepPlaying;
 let cellSize;
 let busy = false;
 let moveCount = 0;
@@ -164,7 +163,7 @@ function updateProgressBar() {
 function saveGame() {
   localStorage.setItem(
     STORAGE_KEY,
-    JSON.stringify({ grid, score, won, keepPlaying, moveCount, taxCells }),
+    JSON.stringify({ grid, score, won, moveCount, taxCells }),
   );
 }
 
@@ -176,7 +175,6 @@ function loadGame() {
       grid = data.grid;
       score = data.score || 0;
       won = data.won || false;
-      keepPlaying = data.keepPlaying || false;
       moveCount = data.moveCount || 0;
       taxCells = data.taxCells || [];
       return true;
@@ -484,11 +482,10 @@ function doMove(direction) {
 
     // Check win / game over
     const hasWin = grid.some((row) => row.some((v) => v >= 256));
-    if (hasWin && !won && !keepPlaying) {
+    if (hasWin) {
       won = true;
       winOverlay.classList.add("visible");
-    }
-    if (!canMove()) {
+    } else if (!canMove()) {
       const { msg } = getGameOverText();
       gameOverMsg.textContent = msg;
       gameOverOverlay.classList.add("visible");
@@ -569,13 +566,12 @@ function init() {
     grid = emptyGrid();
     score = 0;
     won = false;
-    keepPlaying = false;
     spawnRandom(2);
     spawnRandom(2);
   }
 
   gameOverOverlay.classList.remove("visible");
-  if (won && !keepPlaying) winOverlay.classList.add("visible");
+  if (won) winOverlay.classList.add("visible");
   else winOverlay.classList.remove("visible");
   renderStaticTiles();
   updateProgressBar();
@@ -595,7 +591,6 @@ function newGame() {
   grid = emptyGrid();
   score = 0;
   won = false;
-  keepPlaying = false;
   moveCount = 0;
   taxCells = [];
   spawnRandom(2);
@@ -605,14 +600,49 @@ function newGame() {
   saveGame();
 }
 
+/* ── Share results ───────────────────── */
+function shareResults() {
+  let highest = 0;
+  for (let r = 0; r < SIZE; r++)
+    for (let c = 0; c < SIZE; c++)
+      if (grid[r][c] > highest) highest = grid[r][c];
+
+  const highestName = TILES[highest] ? TILES[highest].name : highest;
+  const text = `ThinkOut · Stack & Scale\nReached ${highestName} in ${moveCount} moves\n\nplay.thinkout.io/stack-and-scale`;
+
+  if (navigator.share) {
+    navigator.share({ text }).catch(() => copyToClipboard(text));
+  } else {
+    copyToClipboard(text);
+  }
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard
+    .writeText(text)
+    .then(() => showToast("Copied to clipboard!"))
+    .catch(() => showToast("Could not copy"));
+}
+
+function showToast(message) {
+  const toast = document.createElement("div");
+  toast.style.cssText =
+    "position:fixed;top:20px;left:50%;transform:translateX(-50%);" +
+    "background:#27272a;color:#fff;padding:10px 20px;border-radius:8px;" +
+    "font-size:14px;font-weight:600;z-index:200;";
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transition = "opacity 300ms ease";
+    setTimeout(() => toast.remove(), 300);
+  }, 1500);
+}
+
 /* ── Button handlers ─────────────────── */
 document.getElementById("retryBtn").onclick = newGame;
-document.getElementById("newGameWinBtn").onclick = newGame;
-document.getElementById("keepPlayingBtn").onclick = () => {
-  keepPlaying = true;
-  winOverlay.classList.remove("visible");
-  saveGame();
-};
+document.getElementById("shareGameOverBtn").onclick = shareResults;
+document.getElementById("shareWinBtn").onclick = shareResults;
 
 /* Recalc on resize */
 window.addEventListener("resize", () => {

@@ -46,7 +46,7 @@ const resultOverlay = document.getElementById("resultOverlay");
 const resultTitle = document.getElementById("resultTitle");
 const resultMsg = document.getElementById("resultMsg");
 const resultGroups = document.getElementById("resultGroups");
-const playAgainBtn = document.getElementById("playAgainBtn");
+const shareBtn = document.getElementById("shareBtn");
 
 /* ── Helpers ─────────────────────────── */
 function shuffle(arr) {
@@ -149,7 +149,7 @@ function submit() {
     // Check if all solved
     if (solved.length === GROUPS.length) {
       gameOver = true;
-      saveState();
+      clearState();
       setTimeout(() => showResult(true), 500);
     } else {
       saveState();
@@ -190,7 +190,7 @@ function submit() {
       selected = [];
       renderSolved();
       renderGrid();
-      saveState();
+      clearState();
       setTimeout(() => showResult(false), 800);
     } else {
       saveState();
@@ -304,11 +304,54 @@ function init() {
   clearState();
 }
 
+/* ── Share results ───────────────────── */
+function shareResults() {
+  const colorMap = {
+    "#F9DF6D": "🟨",
+    "#A0C35A": "🟩",
+    "#B0C4EF": "🟦",
+    "#BA81C5": "🟪",
+  };
+  const rows = solved
+    .map((g) => colorMap[g.color] || "⬜")
+    .join("");
+
+  const text = `ThinkOut · Sort It Out\n${solved.length}/${GROUPS.length} groups | ${mistakes} mistakes\n\n${rows}\n\nplay.thinkout.io/sort-it-out`;
+
+  if (navigator.share) {
+    navigator.share({ text }).catch(() => copyToClipboard(text));
+  } else {
+    copyToClipboard(text);
+  }
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard
+    .writeText(text)
+    .then(() => showToast("Copied to clipboard!"))
+    .catch(() => showToast("Could not copy"));
+}
+
+function showToast(message) {
+  const toast = document.createElement("div");
+  toast.style.cssText =
+    "position:fixed;top:20px;left:50%;transform:translateX(-50%);" +
+    "background:#27272a;color:#fff;padding:10px 20px;border-radius:8px;" +
+    "font-size:14px;font-weight:600;z-index:200;";
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transition = "opacity 300ms ease";
+    setTimeout(() => toast.remove(), 300);
+  }, 1500);
+}
+
 /* ── Event listeners ─────────────────── */
 submitBtn.onclick = submit;
 shuffleBtn.onclick = shuffleWords;
 deselectBtn.onclick = deselectAll;
-playAgainBtn.onclick = init;
+shareBtn.onclick = shareResults;
 
 /* ── Onboarding ─────────────────────── */
 const ONBOARDING_KEY = "thinkout_connections_onboarded";

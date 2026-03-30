@@ -76,7 +76,6 @@ const resultTitle = document.getElementById("resultTitle");
 const resultMsg = document.getElementById("resultMsg");
 const resultBoard = document.getElementById("resultBoard");
 const shareBtn = document.getElementById("shareBtn");
-const playAgainBtn = document.getElementById("playAgainBtn");
 
 /* ── Helpers ─────────────────────────── */
 function getTile(row, col) {
@@ -188,13 +187,13 @@ function submitGuess() {
 
     if (won) {
       gameOver = true;
-      saveState();
+      clearState();
       bounceRow(currentRow, () => {
         setTimeout(() => showResult(true), 300);
       });
     } else if (currentRow >= MAX_ROWS - 1) {
       gameOver = true;
-      saveState();
+      clearState();
       setTimeout(() => showResult(false), 600);
     } else {
       currentRow++;
@@ -485,7 +484,6 @@ keyboardEl.addEventListener("click", (e) => {
 
 /* ── Event: buttons ──────────────────── */
 shareBtn.addEventListener("click", shareResults);
-playAgainBtn.addEventListener("click", resetGame);
 
 /* ── Onboarding ─────────────────────── */
 const ONBOARDING_KEY = "thinkout_wordle_onboarded";
