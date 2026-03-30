@@ -34,7 +34,7 @@ const gameOverMsg = document.getElementById("gameOverMsg");
 const winOverlay = document.getElementById("winOverlay");
 
 /* ── Tax config ──────────────────────── */
-const TAX_INTERVAL = 15;   // spawn a tax tile every N moves
+const TAX_INTERVAL = 12;   // spawn a tax tile every N moves
 const TAX_DURATION = 5;    // tax tile lasts N moves
 
 /* ── Game state ──────────────────────── */
