@@ -64,7 +64,7 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 12px;
+  margin-bottom: 24px;
 }
 .header-left {
   display: flex;
@@ -171,7 +171,7 @@ a {
   font-family: inherit;
   background: transparent;
   color: #71717a;
-  border: 2px solid #d4d4d8;
+  border: 2px solid #3f3f46;
   border-radius: 8px;
   padding: 8px 16px;
   font-size: 13px;
