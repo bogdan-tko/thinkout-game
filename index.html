@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <title>ThinkOut · 10 Years of Building</title>
+    <link rel="preload" href="public/fonts/LotaGrotesque-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="public/fonts/LotaGrotesque-SemiBold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="public/fonts/LotaGrotesque-Bold.woff2" as="font" type="font/woff2" crossorigin />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -122,19 +125,6 @@
       .game-card:hover .game-play {
         background: #fde047;
       }
-      .home-footer {
-        margin-top: 48px;
-        font-size: 13px;
-        color: #a1a1aa;
-      }
-      .home-footer a {
-        color: #71717a;
-        text-decoration: underline;
-        transition: color 200ms ease;
-      }
-      .home-footer a:hover {
-        color: #27272a;
-      }
       @media (max-width: 680px) {
         .games-grid {
           grid-template-columns: 1fr;
@@ -194,10 +184,6 @@
           </div>
           <span class="game-play">Play</span>
         </a>
-      </div>
-
-      <div class="home-footer">
-        <a href="https://thinkout.io" target="_blank">thinkout.io</a>
       </div>
     </div>
   </body>
