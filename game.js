@@ -203,7 +203,7 @@ function spawnRandom(forceValue) {
   const empty = getEmptyCells();
   if (!empty.length) return null;
   const [r, c] = empty[Math.floor(Math.random() * empty.length)];
-  grid[r][c] = forceValue || 2;
+  grid[r][c] = forceValue || (Math.random() < 0.9 ? 2 : 4);
   return { r, c, val: grid[r][c] };
 }
 
