@@ -560,7 +560,6 @@ function newGame() {
 }
 
 /* ── Button handlers ─────────────────── */
-document.getElementById("newGameBtn").onclick = newGame;
 document.getElementById("retryBtn").onclick = newGame;
 document.getElementById("newGameWinBtn").onclick = newGame;
 document.getElementById("keepPlayingBtn").onclick = () => {
@@ -619,6 +618,13 @@ document.querySelectorAll(".dot").forEach((dot) => {
   dot.onclick = () => goToSlide(parseInt(dot.dataset.dot));
 });
 
+document.getElementById("instructionsBtn").onclick = () => {
+  const onboarding = document.getElementById("onboarding");
+  currentSlide = 0;
+  goToSlide(0);
+  onboarding.style.display = "";
+  onboarding.classList.remove("hidden");
+};
 
 /* Start */
 document.addEventListener("DOMContentLoaded", () => {

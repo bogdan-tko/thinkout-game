@@ -85,18 +85,21 @@ function renderMistakes() {
   }
 }
 
-function renderSolved() {
-  solvedEl.innerHTML = "";
-  solved.forEach((group) => {
+function renderSolved(animate = true) {
+  const existing = solvedEl.querySelectorAll(".solved-group").length;
+  // Only render newly added groups
+  for (let i = existing; i < solved.length; i++) {
+    const group = solved[i];
     const div = document.createElement("div");
     div.className = "solved-group";
+    if (animate) div.classList.add("animate");
     div.style.background = group.color;
     div.style.color = group.textColor;
     div.innerHTML =
       `<div class="solved-group-name">${group.name}</div>` +
       `<div class="solved-group-words">${group.words.join(", ")}</div>`;
     solvedEl.appendChild(div);
-  });
+  }
 }
 
 function updateSubmitBtn() {
@@ -266,7 +269,8 @@ function restoreState() {
     selected = [];
 
     resultOverlay.classList.add("hidden");
-    renderSolved();
+    solvedEl.innerHTML = "";
+    renderSolved(false);
     renderGrid();
     renderMistakes();
     updateSubmitBtn();
@@ -292,6 +296,7 @@ function init() {
   gameOver = false;
 
   resultOverlay.classList.add("hidden");
+  solvedEl.innerHTML = "";
   renderGrid();
   renderMistakes();
   renderSolved();
