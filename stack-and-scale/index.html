@@ -16,13 +16,17 @@
     <div id="app">
       <!-- Header -->
       <header id="header">
-        <div class="header-left">
-          <div class="logo-row">
-            <a href="/"><img src="../public/logo.svg" alt="ThinkOut" class="logo" /></a>
-          </div>
-          <p class="tagline">Brick by brick from 2016</p>
+        <div class="header-nav">
+          <a href="/" class="header-back">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+            All games
+          </a>
+          <button id="instructionsBtn" class="btn-instructions">Instructions</button>
         </div>
-        <button id="instructionsBtn" class="btn-instructions">Instructions</button>
+        <div class="header-title-row">
+          <h1 class="game-title">Stack & Scale</h1>
+          <p class="game-subtitle">Start small. Merge smart. Build big.</p>
+        </div>
       </header>
 
       <!-- Progress -->
@@ -63,7 +67,7 @@
       <p class="hint">Swipe or use arrow keys to play</p>
 
       <!-- Onboarding dialog -->
-      <div id="onboarding" class="onboarding-backdrop">
+      <div id="onboarding" class="onboarding-backdrop hidden">
         <div class="onboarding-dialog">
           <div class="onboarding-slides">
             <div class="onboarding-slide active" data-slide="0">

@@ -62,14 +62,46 @@ a {
 /* ── Shared header ───────────────────── */
 #header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 16px;
   margin-bottom: 24px;
 }
-.header-left {
+.header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #71717a;
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+.header-back:hover {
+  color: #27272a;
+}
+.header-back svg {
+  width: 16px;
+  height: 16px;
+}
+.header-title-row {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 2px;
+}
+.game-title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.game-subtitle {
+  font-size: 14px;
+  color: #71717a;
+  line-height: 1.4;
 }
 .logo-row {
   display: flex;
@@ -78,11 +110,6 @@ a {
 }
 .logo {
   height: 20px;
-}
-.tagline {
-  font-size: 14px;
-  color: #71717a;
-  margin-top: 0;
 }
 
 /* ── Shared buttons ──────────────────── */
