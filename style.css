@@ -277,6 +277,26 @@ body {
   box-shadow: 0 0 20px #0ea5e9;
 }
 
+/* ── Tax tile ────────────────────────── */
+.taxTile {
+  background: #3f3f46 !important;
+  color: #71717a !important;
+  outline: 2px dashed #52525b;
+  outline-offset: -4px;
+}
+.tax-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #a1a1aa;
+}
+.tax-countdown {
+  font-size: 20px;
+  font-weight: 700;
+  color: #71717a;
+}
+
 /* ── Overlays ────────────────────────── */
 .overlay {
   position: absolute;
@@ -377,6 +397,24 @@ body {
   height: 64px;
   object-fit: contain;
   margin-bottom: 4px;
+}
+.onboarding-tax-preview {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.onboarding-tax-tile {
+  width: 80px;
+  height: 80px;
+  background: #3f3f46;
+  border-radius: 8px;
+  outline: 2px dashed #52525b;
+  outline-offset: -4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
 }
 .onboarding-slide h2 {
   font-size: 20px;

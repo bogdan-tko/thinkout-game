@@ -33,13 +33,19 @@ const gameOverTitle = document.getElementById("gameOverTitle");
 const gameOverMsg = document.getElementById("gameOverMsg");
 const winOverlay = document.getElementById("winOverlay");
 
+/* ── Tax config ──────────────────────── */
+const TAX_INTERVAL = 15;   // spawn a tax tile every N moves
+const TAX_DURATION = 5;    // tax tile lasts N moves
+
 /* ── Game state ──────────────────────── */
-let grid; // 4x4 array of values (0 = empty)
+let grid; // 4x4 array of values (0 = empty)  (-1 = tax)
 let score;
 let won;
 let keepPlaying;
 let cellSize;
 let busy = false;
+let moveCount = 0;
+let taxCells = []; // [{ r, c, remaining }]
 
 /* ── Helpers ─────────────────────────── */
 function calcCellSize() {
@@ -150,7 +156,7 @@ function updateProgressBar() {
 function saveGame() {
   localStorage.setItem(
     STORAGE_KEY,
-    JSON.stringify({ grid, score, won, keepPlaying }),
+    JSON.stringify({ grid, score, won, keepPlaying, moveCount, taxCells }),
   );
 }
 
@@ -163,6 +169,8 @@ function loadGame() {
       score = data.score || 0;
       won = data.won || false;
       keepPlaying = data.keepPlaying || false;
+      moveCount = data.moveCount || 0;
+      taxCells = data.taxCells || [];
       return true;
     } catch {
       /* fall through */
@@ -174,15 +182,34 @@ function loadGame() {
 /* ── Rendering (static layer) ────────── */
 function renderStaticTiles() {
   // Remove any existing static tiles
-  board.querySelectorAll(".staticTile").forEach((el) => el.remove());
+  board.querySelectorAll(".staticTile, .taxTile").forEach((el) => el.remove());
   for (let r = 0; r < SIZE; r++) {
     for (let c = 0; c < SIZE; c++) {
-      if (grid[r][c]) {
+      if (grid[r][c] > 0) {
         const el = createTileEl(grid[r][c], r, c, "staticTile");
         el.style.zIndex = 1;
       }
     }
   }
+  // Render tax tiles
+  taxCells.forEach((tax) => {
+    const el = createTaxTileEl(tax.r, tax.c, tax.remaining);
+    el.style.zIndex = 1;
+  });
+}
+
+function createTaxTileEl(row, col, remaining) {
+  const el = document.createElement("div");
+  el.className = "tile taxTile";
+  el.style.width = cellSize + "px";
+  el.style.height = cellSize + "px";
+  el.style.left = cellLeft(col) + "px";
+  el.style.top = cellTop(row) + "px";
+  el.innerHTML =
+    `<span class="tax-label">Tax</span>` +
+    `<span class="tax-countdown">${remaining}</span>`;
+  board.appendChild(el);
+  return el;
 }
 
 function addScore(points) {
@@ -197,8 +224,29 @@ function emptyGrid() {
 function getEmptyCells() {
   const cells = [];
   for (let r = 0; r < SIZE; r++)
-    for (let c = 0; c < SIZE; c++) if (!grid[r][c]) cells.push([r, c]);
+    for (let c = 0; c < SIZE; c++) if (grid[r][c] === 0) cells.push([r, c]);
   return cells;
+}
+
+function isTaxCell(r, c) {
+  return taxCells.some((t) => t.r === r && t.c === c);
+}
+
+function spawnTax() {
+  const empty = getEmptyCells();
+  if (empty.length <= 2) return; // don't spawn if too cramped
+  const [r, c] = empty[Math.floor(Math.random() * empty.length)];
+  grid[r][c] = -1; // mark as blocked
+  taxCells.push({ r, c, remaining: TAX_DURATION });
+  // Animate the tax tile appearing
+  const el = createTaxTileEl(r, c, TAX_DURATION);
+  el.classList.add("newTile");
+  el.getBoundingClientRect();
+  el.style.transform = "scale(1)";
+  setTimeout(() => {
+    el.remove();
+    renderStaticTiles();
+  }, NEW_MS);
 }
 
 function getGameOverText(maxVal) {
@@ -247,7 +295,8 @@ function spawnRandom(forceValue) {
 function canMove() {
   for (let r = 0; r < SIZE; r++)
     for (let c = 0; c < SIZE; c++) {
-      if (!grid[r][c]) return true;
+      if (grid[r][c] === 0) return true;
+      if (grid[r][c] < 0) continue; // skip tax
       if (c < 3 && grid[r][c] === grid[r][c + 1]) return true;
       if (r < 3 && grid[r][c] === grid[r + 1][c]) return true;
     }
@@ -292,10 +341,13 @@ function doMove(direction) {
   const oldGrid = grid.map((row) => [...row]);
   grid = emptyGrid();
 
+  // Restore tax cells in the new grid (they don't move)
+  taxCells.forEach((t) => { grid[t.r][t.c] = -1; });
+
   for (const r of rows) {
     for (const c of cols) {
       const val = oldGrid[r][c];
-      if (!val) continue;
+      if (!val || val < 0) continue; // skip empty and tax cells
 
       const { farthest, next } = findFarthestInNew(r, c, dr, dc);
 
@@ -393,6 +445,23 @@ function doMove(direction) {
       }, NEW_MS);
     }
 
+    // Tax: decrement existing tax timers
+    taxCells.forEach((tax) => tax.remaining--);
+    const expiredTax = taxCells.filter((tax) => tax.remaining <= 0);
+    expiredTax.forEach((tax) => {
+      grid[tax.r][tax.c] = 0; // free the cell
+    });
+    taxCells = taxCells.filter((tax) => tax.remaining > 0);
+
+    // Tax: spawn new tax tile every N moves
+    moveCount++;
+    if (moveCount % TAX_INTERVAL === 0) {
+      spawnTax();
+    }
+
+    // Re-render after tax changes
+    if (expiredTax.length > 0) renderStaticTiles();
+
     // Update progress
     updateProgressBar();
 
@@ -403,7 +472,7 @@ function doMove(direction) {
       winOverlay.classList.add("visible");
     }
     if (!canMove()) {
-      const maxVal = Math.max(...grid.flat());
+      const maxVal = Math.max(...grid.flat().filter((v) => v > 0));
       const { title, msg } = getGameOverText(maxVal);
       gameOverTitle.textContent = title;
       gameOverMsg.textContent = msg;
@@ -503,13 +572,15 @@ function init() {
 function newGame() {
   busy = false;
   clearAnimTiles();
-  board.querySelectorAll(".staticTile").forEach((el) => el.remove());
+  board.querySelectorAll(".staticTile, .taxTile").forEach((el) => el.remove());
   gameOverOverlay.classList.remove("visible");
   winOverlay.classList.remove("visible");
   grid = emptyGrid();
   score = 0;
   won = false;
   keepPlaying = false;
+  moveCount = 0;
+  taxCells = [];
   spawnRandom(2);
   spawnRandom(2);
   renderStaticTiles();
@@ -536,7 +607,7 @@ window.addEventListener("resize", () => {
 
 /* ── Onboarding ─────────────────────── */
 const ONBOARDING_KEY = "thinkout_onboarded";
-const TOTAL_SLIDES = 4;
+const TOTAL_SLIDES = 5;
 let currentSlide = 0;
 
 function showOnboarding() {
