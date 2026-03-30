@@ -218,7 +218,7 @@ function showResult(won) {
   resultTitle.textContent = won ? "Well played!" : "Better luck next time";
   resultMsg.textContent = won
     ? "You found all four groups. A true builder knows their vocabulary."
-    : "Not every build goes to plan. Try again?";
+    : "Not every build goes to plan. But now you see the full picture.";
 
   resultGroups.innerHTML = "";
   GROUPS.forEach((g) => {
