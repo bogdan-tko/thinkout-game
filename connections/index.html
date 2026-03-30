@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>ThinkOut · Connections</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../public/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../public/favicon/favicon-light-32x32.png" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../public/favicon/favicon-light-16x16.png" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../public/favicon/favicon-dark-32x32.png" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../public/favicon/favicon-dark-16x16.png" media="(prefers-color-scheme: dark)" />
+    <link rel="stylesheet" href="../shared.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header id="header">
+        <div class="header-left">
+          <div class="logo-row">
+            <a href="/"><img src="../public/logo.svg" alt="ThinkOut" class="logo" /></a>
+          </div>
+          <p class="tagline">Find the four groups of four</p>
+        </div>
+      </header>
+
+      <!-- Solved groups appear here -->
+      <div id="solved"></div>
+
+      <!-- Word grid -->
+      <div id="grid"></div>
+
+      <!-- Mistakes -->
+      <div id="mistakes">
+        <span class="mistakes-label">Mistakes remaining:</span>
+        <span id="mistakeDots"></span>
+      </div>
+
+      <!-- Controls -->
+      <div id="controls">
+        <button id="shuffleBtn" class="btn btn-outline">Shuffle</button>
+        <button id="deselectBtn" class="btn btn-outline">Deselect all</button>
+        <button id="submitBtn" class="btn" disabled>Submit</button>
+      </div>
+
+      <!-- Result overlay -->
+      <div id="resultOverlay" class="result-overlay hidden">
+        <div class="result-content">
+          <h2 id="resultTitle"></h2>
+          <p id="resultMsg" class="result-msg"></p>
+          <div id="resultGroups" class="result-groups"></div>
+          <div class="result-buttons">
+            <button id="playAgainBtn" class="btn">Play again</button>
+            <a href="/" class="btn btn-outline">Back to games</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="game.js"></script>
+  </body>
+</html>
