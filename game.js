@@ -4,10 +4,10 @@ const TILES = {
   4: { name: "Wall", emoji: "🪨" },
   8: { name: "Garage", emoji: "🔧" },
   16: { name: "Office", emoji: "🏢" },
-  32: { name: "Fort", emoji: "🏰" },
-  64: { name: "Tower", emoji: "🗼" },
-  128: { name: "Citadel", emoji: "🏯" },
-  256: { name: "Polis", emoji: "🌆" },
+  32: { name: "Fort", img: "public/objects/fort.png" },
+  64: { name: "Tower", img: "public/objects/tower.png" },
+  128: { name: "Citadel", img: "public/objects/citadel.png" },
+  256: { name: "Polis", img: "public/objects/polis.png" },
 };
 
 /* ── Constants ───────────────────────── */
@@ -61,8 +61,11 @@ function nameSize() {
 
 function makeTileHTML(val) {
   const cfg = TILES[val] || { name: String(val), emoji: "❓" };
+  const icon = cfg.img
+    ? `<img class="tile-img" src="${cfg.img}" alt="${cfg.name}" style="height:${emojiSize() * 1.4}px">`
+    : `<span class="tile-emoji" style="font-size:${emojiSize()}px">${cfg.emoji}</span>`;
   return (
-    `<span class="tile-emoji" style="font-size:${emojiSize()}px">${cfg.emoji}</span>` +
+    icon +
     `<span class="tile-name" style="font-size:${nameSize()}px">${cfg.name}</span>`
   );
 }
@@ -94,8 +97,11 @@ function buildProgressBar() {
     const step = document.createElement("div");
     step.className = "progress-step";
     step.dataset.value = val;
+    const icon = cfg.img
+      ? `<img class="progress-img" src="${cfg.img}" alt="${cfg.name}">`
+      : `<span class="progress-emoji">${cfg.emoji}</span>`;
     step.innerHTML =
-      `<span class="progress-emoji">${cfg.emoji}</span>` +
+      icon +
       `<span class="progress-name">${cfg.name}</span>`;
     progressTrack.appendChild(step);
 
