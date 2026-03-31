@@ -117,6 +117,9 @@
       .home-body {
         font-size: 15px;
         color: #71717a;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
         line-height: 1.7;
         max-width: 540px;
         margin: 0 auto 36px;
@@ -191,19 +194,23 @@
   <body>
     <div class="home">
       <img src="public/thinkout-10.svg" alt="ThinkOut" class="home-logo" />
-      <p class="home-body">
-        Building a business is never easy. It takes sharp decisions, smart
-        guesses, and the patience to grow, in any direction. For 10 years,
-        ThinkOut has been built exactly like that. Brick by brick.
+      <div class="home-body">
+        <p>
+          Building a business is never easy. It takes sharp decisions, smart
+          guesses, and the patience to grow, in any direction. For 10 years,
+          ThinkOut has been built exactly like that. Brick by brick.
+        </p>
+        <p>
+          To celebrate, we built three games that put to the test some skills
+          every entrepreneur should sharpen, from decision making, to trial and
+          error, to building something that lasts.
+        </p>
+        <p>
+          Analyze your options. Trust your instincts. Grow what you've started.
+        </p>
         <br />
-        To celebrate, we built three games that put to the test some skills
-        every entrepreneur should sharpen, from decision making, to trial and
-        error, to building something that lasts.
-        <br />
-        Analyze your options. Trust your instincts. Grow what you've started.
-        <br /><br />
-        <strong style="color: #27272a">Let's start building!</strong>
-      </p>
+        <p><strong style="color: #27272a">Let's start building!</strong></p>
+      </div>
 
       <div class="games-grid">
         <a href="/sort-it-out/" class="game-card">
