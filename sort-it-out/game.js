@@ -1,7 +1,7 @@
 /* ── Groups config ───────────────────── */
 const GROUPS = [
   {
-    name: "Structures You Build",
+    name: "From The Ground Up",
     color: "#F9DF6D",
     textColor: "#1a1a1a",
     words: ["Fort", "Tower", "Citadel", "Polis"],
@@ -169,7 +169,9 @@ function submit() {
     const tiles = gridEl.querySelectorAll(".word-tile.selected");
     tiles.forEach((t) => {
       t.classList.add("shake");
-      t.addEventListener("animationend", () => t.classList.remove("shake"), { once: true });
+      t.addEventListener("animationend", () => t.classList.remove("shake"), {
+        once: true,
+      });
     });
 
     mistakes++;
@@ -242,7 +244,7 @@ const STATE_KEY = "thinkout_connections_state";
 
 function saveState() {
   const state = {
-    solvedNames: solved.map(g => g.name),
+    solvedNames: solved.map((g) => g.name),
     solvedByPlayer,
     mistakes,
     gameOver,
@@ -261,10 +263,11 @@ function restoreState() {
 
   try {
     const state = JSON.parse(raw);
-    if (!state.solvedNames || !state.solvedNames.length && !state.mistakes) return false;
+    if (!state.solvedNames || (!state.solvedNames.length && !state.mistakes))
+      return false;
 
     solved = state.solvedNames
-      .map(name => GROUPS.find(g => g.name === name))
+      .map((name) => GROUPS.find((g) => g.name === name))
       .filter(Boolean);
     solvedByPlayer = state.solvedByPlayer || solved.length;
     mistakes = state.mistakes || 0;
@@ -317,9 +320,7 @@ function shareResults() {
     "#B0C4EF": "🟦",
     "#BA81C5": "🟪",
   };
-  const rows = solved
-    .map((g) => colorMap[g.color] || "⬜")
-    .join("");
+  const rows = solved.map((g) => colorMap[g.color] || "⬜").join("");
 
   const text = `ThinkOut · Sort It Out\n${solvedByPlayer}/${GROUPS.length} groups | ${mistakes} mistakes\n\n${rows}\n\n${location.origin}/sort-it-out`;
 
@@ -376,9 +377,15 @@ function showOnboarding() {
 
 function goToSlide(n) {
   currentSlide = n;
-  document.querySelectorAll(".onboarding-slide").forEach((s) => s.classList.remove("active"));
-  document.querySelectorAll(".dot").forEach((d) => d.classList.remove("active"));
-  document.querySelector(`.onboarding-slide[data-slide="${n}"]`).classList.add("active");
+  document
+    .querySelectorAll(".onboarding-slide")
+    .forEach((s) => s.classList.remove("active"));
+  document
+    .querySelectorAll(".dot")
+    .forEach((d) => d.classList.remove("active"));
+  document
+    .querySelector(`.onboarding-slide[data-slide="${n}"]`)
+    .classList.add("active");
   document.querySelector(`.dot[data-dot="${n}"]`).classList.add("active");
   const btn = document.getElementById("onboardingNext");
   btn.textContent = n === TOTAL_SLIDES - 1 ? "Got it!" : "Next";
@@ -391,7 +398,9 @@ document.getElementById("onboardingNext").onclick = () => {
     const onboarding = document.getElementById("onboarding");
     onboarding.classList.add("hidden");
     localStorage.setItem(ONBOARDING_KEY, "1");
-    setTimeout(() => { onboarding.style.display = "none"; }, 300);
+    setTimeout(() => {
+      onboarding.style.display = "none";
+    }, 300);
   }
 };
 
