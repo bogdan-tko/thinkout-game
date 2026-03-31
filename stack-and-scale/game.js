@@ -219,14 +219,30 @@ function renderStaticTiles() {
     }
   }
 
-  // Update tax tiles
-  staticTaxEls.forEach((t) => t.el.remove());
-  staticTaxEls = [];
+  // Update tax tiles — diff instead of rebuild
+  const newTaxEls = [];
   taxCells.forEach((tax) => {
-    const el = createTaxTileEl(tax.r, tax.c, tax.remaining);
-    el.style.zIndex = 1;
-    staticTaxEls.push({ r: tax.r, c: tax.c, remaining: tax.remaining, el });
+    const existing = staticTaxEls.find(
+      (t) => t.r === tax.r && t.c === tax.c
+    );
+    if (existing) {
+      // Update position and countdown in place
+      existing.el.style.left = cellLeft(tax.c) + "px";
+      existing.el.style.top = cellTop(tax.r) + "px";
+      existing.el.querySelector(".tax-countdown").textContent = tax.remaining;
+      existing.remaining = tax.remaining;
+      newTaxEls.push(existing);
+    } else {
+      const el = createTaxTileEl(tax.r, tax.c, tax.remaining);
+      el.style.zIndex = 1;
+      newTaxEls.push({ r: tax.r, c: tax.c, remaining: tax.remaining, el });
+    }
   });
+  // Remove tax tiles no longer present
+  staticTaxEls.forEach((t) => {
+    if (!newTaxEls.includes(t)) t.el.remove();
+  });
+  staticTaxEls = newTaxEls;
 }
 
 function clearStaticTiles() {
