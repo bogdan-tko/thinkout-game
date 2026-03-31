@@ -321,7 +321,7 @@ function shareResults() {
     .map((g) => colorMap[g.color] || "⬜")
     .join("");
 
-  const text = `ThinkOut · Sort It Out\n${solvedByPlayer}/${GROUPS.length} groups | ${mistakes} mistakes\n\n${rows}\n\nplay.thinkout.io/sort-it-out`;
+  const text = `ThinkOut · Sort It Out\n${solvedByPlayer}/${GROUPS.length} groups | ${mistakes} mistakes\n\n${rows}\n\n${location.origin}/sort-it-out`;
 
   if (navigator.share) {
     navigator.share({ text }).catch(() => copyToClipboard(text));
